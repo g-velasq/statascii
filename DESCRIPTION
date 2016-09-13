@@ -7,3 +7,5 @@ Maintainer: Gustavo Velásquez <gvelasq2@users.noreply.github.com>
 Description: The `statascii()` function is an adapted version of `asciify()` by @gavinsimpson. It creates Stata-like ASCII tables in the R console, including right-aligned text, Stata-like padding, various Stata table formats (`oneway`, `twoway`, and `summary`), and Unicode box drawing characters.
 License: MIT
 LazyData: TRUE
+URL: http://github.com/gvelasq2/statascii
+BugReports: http://github.com/gvelasq2/statascii/issues
