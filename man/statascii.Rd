@@ -34,6 +34,6 @@ c <- mtcars %>% group_by(gear) %>% summarize(
 statascii(c, flavor = "summary")
 
 ## Reference
-# `statascii()` borrows heavily  from `asciify()`.
+# `statascii()` borrows heavily from `asciify()`.
 # The `asciify()` function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson).
-# The `statascii()' function was initially written by @gvelasq2 in Github Gist (https://gist.github.com/gvelasq2).
+# The `statascii()' function was written by @gvelasq2 in Github Gist (https://gist.github.com/gvelasq2).
