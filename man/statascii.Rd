@@ -12,18 +12,26 @@ statascii()
 }
 
 ## Examples
-# setup
+# Setup
 library(dplyr)
-# 'oneway' flavor for one-way tables of frequencies
+library(tibble)
+
+# Demonstrate 'oneway' flavor for one-way tables of frequencies
 a <- mtcars %>% count(gear) %>% rename(Freq. = n)
+a <- a %>% add_row(gear = "Total", Freq. = sum(a[,2]))
 statascii(a, flavor = "oneway")
-# 'oneway' flavor with no Stata-like padding
+
+# Demonstrate 'oneway' flavor with no Stata-like padding
 a <- mtcars %>% count(gear) %>% rename(Freq. = n)
+a <- a %>% add_row(gear = "Total", Freq. = sum(a[,2]))
 statascii(a, flavor = "oneway", padding = "none")
-# 'twoway' flavor for n-way tables of frequencies
+
+# Demonstrate 'twoway' flavor for n-way tables of frequencies
 b <- mtcars %>% count(gear, carb, am) %>% rename(Freq. = n)
+b <- b %>% ungroup() %>% add_row(gear = "Total", carb = "", am = "", Freq. = sum(b[,4]))
 statascii(b, flavor = "twoway")
-# 'summary' flavor for summary statistics
+
+# Demonstrate 'summary' flavor for summary statistics
 c <- mtcars %>% group_by(gear) %>% summarize(
     Obs = n(),
     Mean = mean(gear),
