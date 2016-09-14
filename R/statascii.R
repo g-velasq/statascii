@@ -33,6 +33,7 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
             paste0(rep("\xe2\x94\x80", x + (2L * pad)),
                    collapse = ""),
             pad = pad)
+        cat("\n")
         paste0("\xe2\x94\x80", paste(tmp, collapse = "\xe2\x94\xbc"))
     }
     Row1 <- function(x, n, pad = 1L) {
