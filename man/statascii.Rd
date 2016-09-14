@@ -14,7 +14,7 @@ statascii()
 ## Examples
 # Setup
 library(dplyr)
-library(tibble)
+library(stringr)
 
 # Demonstrate 'oneway' flavor for one-way tables of frequencies
 a <- mtcars %>% count(gear) %>% rename(Freq. = n)
