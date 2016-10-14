@@ -21,7 +21,7 @@ a <- mtcars %>% count(gear) %>% rename(Freq. = n)
 a <- a %>% add_row(gear = "Total", Freq. = sum(a[,2]))
 statascii(a, flavor = "oneway")
 
-# Demonstrate 'oneway' flavor with no Stata-like padding
+# Demonstrate 'oneway' flavor with no padding
 a <- mtcars %>% count(gear) %>% rename(Freq. = n)
 a <- a %>% add_row(gear = "Total", Freq. = sum(a[,2]))
 statascii(a, flavor = "oneway", padding = "none")
@@ -40,6 +40,10 @@ c <- mtcars %>% group_by(gear) %>% summarize(
     Max = max(gear)
 )
 statascii(c, flavor = "summary")
+
+# Demonstrate wrapping feature for wide tables
+d <- mtcars %>% mutate(mpg2 = mpg, cyl2 = cyl, disp2 = disp, hp2 = hp, drat2 = drat, wt2 = wt, qsec2 = qsec, vs2 = vs, am2 = am, gear2 = gear, carb2 = carb) %>% slice(1:5)
+statascii(d, flavor = "oneway")
 
 ## Reference
 # `statascii()` borrows heavily from `asciify()`.
