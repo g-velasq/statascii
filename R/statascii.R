@@ -92,14 +92,21 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
     }
     else if (padding == "none") {
     }
-    SepLine <- function(n, pad = 1L) {
+    sep_line <- function(n, pad = 1L) {
         tmp <- lapply(n, function(x, pad)
             paste0(rep("\xe2\x94\x80", x + (2L * pad)),
                    collapse = ""),
             pad = pad)
         paste0("\xe2\x94\x80", paste0(tmp, collapse = "\xe2\x94\xbc"))
     }
-    Row1 <- function(x, n, pad = 1L) {
+    sep_dash <- function(n, pad = 1L) {
+        tmp <- lapply(n, function(x, pad)
+            paste0(rep("-", x + (2L * pad)),
+                   collapse = ""),
+            pad = pad)
+        paste0("-", paste0(tmp, collapse = "\xe2\x94\xbc"))
+    }
+    row1 <- function(x, n, pad = 1L) {
         foo <- function(i, x, n) {
             fmt <- paste0("%", n[i], "s")
             sprintf(fmt, as.character(x[i]))
@@ -111,7 +118,7 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
             paste0(paste0(rep(" ", pad), rowc[-1], rep(" ", pad)), collapse = " ")
         )
     }
-    Row2 <- function(x, n, pad = 1L) {
+    row2 <- function(x, n, pad = 1L) {
         foo <- function(i, x, n) {
             fmt <- paste0("%", n[i], "s")
             sprintf(fmt, as.character(x[i]))
@@ -135,37 +142,43 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
                        (2L * ncol(df)) - 6L),
                        M[length(M)] - 1L))
     if (flavor == "oneway") {
-        sep <- SepLine(M1, pad = pad)
-        table <- capture.output(writeLines(Row1(colnames(df), M, pad = pad)))
+        sep <- sep_line(M1, pad = pad)
+        sep_group <- sep_dash(M1, pad = pad)
+        table <- capture.output(writeLines(row1(colnames(df), M, pad = pad)))
         table <- as.matrix(rbind(table, capture.output(writeLines(sep))))
-        totalLine <- nrow(df) - 1L
+        total_line <- nrow(df) - 1L
         for (i in seq_len(nrow(df))) {
-            table <- as.matrix(rbind(table, capture.output(writeLines(Row1(df[i, ], M, pad = pad)))))
-            if (i == totalLine) {
+            table <- as.matrix(rbind(table, capture.output(writeLines(row1(df[i, ], M, pad = pad)))))
+            if (i > 0L & i < total_line) {
+                if (df[i,1L] != df[i+1L,1L]) {
+                    table <- as.matrix(rbind(table, capture.output(writeLines(sep_group))))                                  
+                }
+            }
+            if (i == total_line) {
                 table <- as.matrix(rbind(table, capture.output(writeLines(sep))))
             }
         }
         tbl_wrap(table, M = M, M1 = M1)
     }
     else if (flavor == "twoway") {
-        sep <- SepLine(M2, pad = pad)
-        table <- capture.output(writeLines(Row2(colnames(df), M, pad = pad)))
+        sep <- sep_line(M2, pad = pad)
+        table <- capture.output(writeLines(row2(colnames(df), M, pad = pad)))
         table <- as.matrix(rbind(table, capture.output(writeLines(sep))))
-        totalLine <- nrow(df) - 1L
+        total_line <- nrow(df) - 1L
         for (i in seq_len(nrow(df))) {
-            table <- as.matrix(rbind(table, capture.output(writeLines(Row2(df[i, ], M, pad = pad)))))
-            if (i == totalLine) {
+            table <- as.matrix(rbind(table, capture.output(writeLines(row2(df[i, ], M, pad = pad)))))
+            if (i == total_line) {
                 table <- as.matrix(rbind(table, capture.output(writeLines(sep))))
             }
         }
         tbl_wrap(table, M = M, M1 = M1)
     }
     else if (flavor == "summary") {
-        sep <- SepLine(M1, pad = pad)
-        table <- capture.output(writeLines(Row1(colnames(df), M, pad = pad)))
+        sep <- sep_line(M1, pad = pad)
+        table <- capture.output(writeLines(row1(colnames(df), M, pad = pad)))
         table <- as.matrix(rbind(table, capture.output(writeLines(sep))))
         for (i in seq_len(nrow(df))) {
-            table <- as.matrix(rbind(table, capture.output(writeLines(Row1(df[i, ], M, pad = pad)))))
+            table <- as.matrix(rbind(table, capture.output(writeLines(row1(df[i, ], M, pad = pad)))))
         }
         tbl_wrap(table, M = M, M1 = M1)
     }
