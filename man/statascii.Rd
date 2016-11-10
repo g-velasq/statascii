@@ -42,7 +42,10 @@ c <- mtcars %>% group_by(gear) %>% summarize(
 statascii(c, flavor = "summary")
 
 # Demonstrate wrapping feature for wide tables
-d <- mtcars %>% mutate(mpg2 = mpg, cyl2 = cyl, disp2 = disp, hp2 = hp, drat2 = drat, wt2 = wt, qsec2 = qsec, vs2 = vs, am2 = am, gear2 = gear, carb2 = carb) %>% slice(1:5)
+d <- mtcars %>% mutate(cyl2 = cyl, vs2 = vs, am2 = am, carb2 = carb) %>%
+filter(gear != 5) %>% count(gear, carb, am, vs, cyl, carb2, am2, vs2, cyl2) %>% rename(Freq. = n) %>% ungroup()
+d <- d %>% add_row(gear = "Total", Freq. = sum(d[,10]))
+d[is.na(d)] <- ""
 statascii(d, flavor = "oneway")
 
 ## Reference
