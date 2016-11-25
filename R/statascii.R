@@ -94,17 +94,17 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
     }
     sep_line <- function(n, pad = 1L) {
         tmp <- lapply(n, function(x, pad)
-            paste0(rep("\xe2\x94\x80", x + (2L * pad)),
+            paste0(rep("\u2500", x + (2L * pad)),
                    collapse = ""),
             pad = pad)
-        paste0("\xe2\x94\x80", paste0(tmp, collapse = "\xe2\x94\xbc"))
+        paste0("\u2500", paste0(tmp, collapse = "\u253c"))
     }
     sep_dash <- function(n, pad = 1L) {
         tmp <- lapply(n, function(x, pad)
             paste0(rep("-", x + (2L * pad)),
                    collapse = ""),
             pad = pad)
-        paste0("-", paste0(tmp, collapse = "\xe2\x94\xbc"))
+        paste0("-", paste0(tmp, collapse = "\u253c"))
     }
     row1 <- function(x, n, pad = 1L) {
         foo <- function(i, x, n) {
@@ -114,7 +114,7 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
         rowc <- sapply(seq_along(x), foo, x = x, n = n)
         paste0(" ",
             paste0(paste0(rep(" ", pad), rowc[1], rep(" ", pad)), collapse = ""),
-            "\xe2\x94\x82",
+            "\u2502",
             paste0(paste0(rep(" ", pad), rowc[-1], rep(" ", pad)), collapse = " ")
         )
     }
@@ -126,9 +126,9 @@ statascii <- function(df, flavor = "oneway", padding = "stata", pad = 1L, ...) {
         rowc <- sapply(seq_along(x), foo, x = x, n = n)
         paste0(
             paste0(paste0(rep(" ", pad), rowc[1], rep(" ", pad)), collapse = ""),
-            "\xe2\x94\x82",
+            "\u2502",
             paste0(paste0(rep(" ", pad), rowc[2:(length(rowc) - 1)], rep(" ", pad)), collapse = ""),
-            "\xe2\x94\x82",
+            "\u2502",
             paste0(paste0(rep(" ", pad), rowc[length(rowc)], rep(" ", pad)), collapse = " ")
         )
     }
