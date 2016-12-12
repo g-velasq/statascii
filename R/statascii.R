@@ -83,12 +83,15 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
     if (ncol(df) <= 1L) {
         stop("data.frame must have at least two columns", call. = FALSE)
     }
-    df <- as.matrix(sapply(format(df, digits = 3L, scientific = FALSE), as.character))
+    df <- as.matrix(sapply(df, as.character))
     if (ncol(df) == 1L) {
         df <- t(df)
     }
     if (padding == "stata") {
         colnames(df) <- str_pad(colnames(df), 9L, pad = " ")
+    }
+    if (padding == "sum_up") {
+        colnames(df) <- str_pad(colnames(df), 5L, pad = " ")
     }
     else if (padding == "none") {
     }
