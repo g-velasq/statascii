@@ -122,7 +122,8 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
     paste0(" ",
            paste0(paste0(rep(" ", pad), row_content[1], rep(" ", pad)), collapse = ""),
            "\u2502",
-           paste0(paste0(rep(" ", pad), row_content[-1], rep(" ", pad)), collapse = " "))
+           paste0(paste0(rep(" ", pad), row_content[-1], rep(" ", pad)), collapse = " ")
+    )
   }
   add_row_twoway <- function(x, n, pad = 1L) {
     reformat <- function(i, x, n) {
