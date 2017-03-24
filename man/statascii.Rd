@@ -52,5 +52,5 @@ statascii(d, flavor = "oneway", separators = TRUE)
 ## Reference
 # `statascii()` borrows heavily from `asciify()`.
 # The `asciify()` function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson).
-# The `statascii()' function was written by @gvelasq2 in Github (https://github.com/gvelasq2/statascii) and Github Gist (https://gist.github.com/gvelasq2).
+# The `statascii()` function was written by @gvelasq2 in Github (https://github.com/gvelasq2/statascii) and Github Gist (https://gist.github.com/gvelasq2).
 }
