@@ -9,3 +9,5 @@ LazyData: true
 ByteCompile: true
 URL: https://github.com/gvelasq2/statascii
 BugReports: https://github.com/gvelasq2/statascii/issues
+RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
