@@ -1,80 +1,61 @@
-############################################################
-#                                                          #
-#                        statascii                         #
-#           Create Stata-like ASCII tables in R            #
-#                                                          #
-############################################################
+#' Create Stata-like tables in the R console
+#' @name statascii
+#' @usage statascii(df, ..., flavor = "oneway", padding = "stata", separators = FALSE)
+#' @param df A data.frame or tibble.
+#' @param ... A comma separated list of unquoted variable names. Use `desc()` to sort a variable in descending order.
+#' @param flavor Choose 'oneway', 'twoway', or 'summary'.
+#' @param padding Choose 'stata', 'summary', or 'none'.
+#' @param separators Tabbed row separators when tabulating more than one variable.
+#'
+#' @return A Stata-like formatted table is displayed in the console. An unformatted tibble is invisibly returned.
+#' 
+#' @examples
+#' # setup
+#' library(dplyr)
+#' library(stringr)
+#' 
+#' # a. demonstrate 'oneway' flavor for one-way tables of frequencies
+#' a <- mtcars %>% count(gear) %>% rename(Freq. = n)
+#' a <- a %>% add_row(gear = "Total", Freq. = sum(a[, 2]))
+#' statascii(a, flavor = "oneway")
+#' 
+#' # b. demonstrate 'oneway' flavor with no padding
+#' b <- mtcars %>% count(gear) %>% rename(Freq. = n)
+#' b <- b %>% add_row(gear = "Total", Freq. = sum(b[, 2]))
+#' statascii(b, flavor = "oneway", padding = "none")
+#' 
+#' # c. demonstrate 'twoway' flavor for n-way tables of frequencies
+#' c <- mtcars %>% count(gear, carb, am) %>% rename(Freq. = n)
+#' c <- c %>% ungroup() %>% add_row(gear = "Total", carb = "", am = "", Freq. = sum(c[, 4]))
+#' statascii(c, flavor = "twoway")
+#' 
+#' # d. demonstrate 'twoway' flavor with dashed group separator
+#' d <- mtcars %>% count(gear, carb, am) %>% rename(Freq. = n)
+#' d <- d %>% ungroup() %>% add_row(gear = "Total", carb = "", am = "", Freq. = sum(d[, 4]))
+#' statascii(d, flavor = "twoway", separators = TRUE)
+#' 
+#' # e. demonstrate 'summary' flavor for summary statistics
+#' e <- mtcars %>% group_by(gear) %>% summarize(
+#'   Obs = n(),
+#'   Mean = mean(gear),
+#'   "Std. Dev." = sd(gear),
+#'   Min = min(gear),
+#'   Max = max(gear)
+#' )
+#' statascii(e, flavor = "summary")
+#' 
+#' # f. demonstrate wrapping feature for wide tables
+#' f <- mtcars %>%
+#'   mutate(cyl2 = cyl, vs2 = vs, am2 = am, carb2 = carb) %>%
+#'   filter(gear != 5) %>%
+#'   count(gear, carb, am, vs, cyl, carb2, am2, vs2, cyl2) %>%
+#'   rename(Freq. = n) %>%
+#'   ungroup()
+#' f <- f %>% add_row(gear = "Total", Freq. = sum(f[, 10]))
+#' f[is.na(f)] <- ""
+#' statascii(f, flavor = "oneway", separators = TRUE)
 
-wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
-  stopifnot(is.matrix(tbl))
-  if (max(nchar(tbl)) <= width) {
-    cat(tbl, sep = "\n")
-  }
-  if (max(nchar(tbl)) > width) {
-    M_rest <- M[-1] + 3L
-    M_rest[1] <- M_rest[1] - 1L
-    M_start <- M[-1]
-    M_start[seq_along(M_start)] <- 0L
-    M_start[1] <- 1L
-    M_end <- M[-1]
-    M_end[seq_along(M_end)] <- 0L
-    M_end[1] <- M_rest[1]
-    if (length(M_rest) > 1L) {
-      for (i in 2L:length(M_rest)) {
-        M_end[i] <- M_end[i - 1L] + M_rest[i]
-        M_start[i] <- M_end[i - 1L] + 1L
-      }
-    }
-    col_one <- as.matrix(str_sub(tbl, start = 1L, end = M1[1] + 4L))
-    col_rest <- as.matrix(str_sub(tbl, start = M1[1] + 5L, end = -1L))
-    col_position <- matrix(c(M_start, M_end), ncol = 2L)
-    all_cols <- list()
-    if (length(M_rest) > 1L) {
-      for (i in 1L:length(M_rest)) {
-        all_cols[[i + 1L]] <-
-          as.matrix(stringr::str_sub(col_rest, col_position[i, 1], col_position[i, 2]))
-      }
-    }
-    all_cols[[1]] <- col_one
-    col_widths <- vector(mode = "integer", length = length(all_cols))
-    col_sums <- vector(mode = "integer", length = length(all_cols))
-    col_index <- vector(mode = "integer", length = length(all_cols))
-    wrap_count <- 1L
-    for (i in 1L:length(all_cols)) {
-      col_widths[i] <- max(nchar(all_cols[[i]]))
-      col_index[i] <- wrap_count
-    }
-    col_sums[1] <- col_widths[1]
-    for (i in 2L:length(all_cols)) {
-      col_sums[i] <- col_widths[i] + col_sums[i - 1L]
-      if (col_sums[i] > width) {
-        wrap_count <- wrap_count + 1L
-        col_sums[i] <- col_widths[1L] + col_widths[i]
-      }
-      if (wrap_count > 1L) {
-        col_index[i] <- wrap_count
-      }
-    }
-    tbl_wrapped <- vector(mode = "list", length = wrap_count)
-    for (i in 1L:length(tbl_wrapped)) {
-      tbl_wrapped[i] <- all_cols[1]
-    }
-    for (i in 2L:length(col_index)) {
-      current_list <- col_index[i]
-      tbl_wrapped[[current_list]] <- as.matrix(
-        paste0(as.matrix(unlist(tbl_wrapped[current_list])),
-               as.matrix(unlist(all_cols[i])))
-      )
-    }
-    for (i in 1L:length(tbl_wrapped)) {
-      cat(tbl_wrapped[[i]], sep = "\n")
-      if (i < length(tbl_wrapped)) {
-        cat("\n")
-      }
-    }
-  }
-}
-
+#' @export
 statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, separators = FALSE) {
   stopifnot(is.data.frame(df))
   if (ncol(df) <= 2L & flavor == "twoway") {
@@ -91,7 +72,7 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
   if (padding == "stata") {
     colnames(df) <- stringr::str_pad(colnames(df), 9L, pad = " ")
   }
-  if (padding == "sum_up") {
+  if (padding == "summary") {
     colnames(df) <- stringr::str_pad(colnames(df), 5L, pad = " ")
   }
   else if (padding == "none") {
