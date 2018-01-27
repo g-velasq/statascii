@@ -5,9 +5,6 @@
 #                                                          #
 ############################################################
 
-library(dplyr)
-library(stringr)
-
 wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
   stopifnot(is.matrix(tbl))
   if (max(nchar(tbl)) <= width) {
@@ -35,7 +32,7 @@ wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
     if (length(M_rest) > 1L) {
       for (i in 1L:length(M_rest)) {
         all_cols[[i + 1L]] <-
-          as.matrix(str_sub(col_rest, col_position[i, 1], col_position[i, 2]))
+          as.matrix(stringr::str_sub(col_rest, col_position[i, 1], col_position[i, 2]))
       }
     }
     all_cols[[1]] <- col_one
@@ -92,10 +89,10 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
     df <- t(df)
   }
   if (padding == "stata") {
-    colnames(df) <- str_pad(colnames(df), 9L, pad = " ")
+    colnames(df) <- stringr::str_pad(colnames(df), 9L, pad = " ")
   }
   if (padding == "sum_up") {
-    colnames(df) <- str_pad(colnames(df), 5L, pad = " ")
+    colnames(df) <- stringr::str_pad(colnames(df), 5L, pad = " ")
   }
   else if (padding == "none") {
   }
