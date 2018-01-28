@@ -161,7 +161,7 @@ Reference
 
 `asciify()` was written by @gavinsimpson in [StackOverflow](https://stackoverflow.com/questions/13011383) and [GitHub Gist](https://gist.github.com/gavinsimpson/2b49f3026b50eeba29314398e27a6770).
 
-`statascii()` was written by @gvelasq2 in [Github Gist](https://gist.github.com/gvelasq2/a39348f59f4353a9478704a28f86ed69) and now has its own package [here](https://github.com/gvelasq2/statascii).
+`statascii()` was written by @gvelasq2 in [Github Gist](https://gist.github.com/gvelasq2/a39348f59f4353a9478704a28f86ed69) and now has its own [GitHub](https://github.com/gvelasq2/statascii) package.
 
 ------------------------------------------------------------------------
 
