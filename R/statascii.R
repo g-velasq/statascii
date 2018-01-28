@@ -1,5 +1,9 @@
 #' Create Stata-like tables in the R console
+#' 
 #' @name statascii
+#' 
+#' @importFrom rlang %|%
+#' 
 #' @usage statascii(df, ..., flavor = "oneway", padding = "stata", separators = FALSE)
 #' @param df A data.frame or tibble.
 #' @param ... A comma separated list of unquoted variable names. Use `desc()` to sort a variable in descending order.
@@ -141,6 +145,7 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
         as.matrix(rbind(table_captured, capture.output(writeLines(add_row_oneway(df[i, ], M, pad = pad)))))
       if (i > 0L & i < total_line) {
         if (separators) {
+          df <- df %|% "NA"
           if (df[i, 1] != df[i + 1L, 1]) {
             table_captured <-
               as.matrix(rbind(table_captured, capture.output(writeLines(group_dashes))))
@@ -167,6 +172,7 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
         as.matrix(rbind(table_captured, capture.output(writeLines(add_row_twoway(df[i, ], M, pad = pad)))))
       if (i > 0L & i < total_line) {
         if (separators) {
+          df <- df %|% "NA"
           if (df[i, 1] != df[i + 1L, 1]) {
             table_captured <-
               as.matrix(rbind(table_captured, capture.output(writeLines(group_dashes))))
@@ -192,6 +198,7 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
         as.matrix(rbind(table_captured, capture.output(writeLines(add_row_oneway(df[i, ], M, pad = pad)))))
       if (i > 0L & i < nrow(df)) {
         if (separators) {
+          df <- df %|% "NA"
           if (df[i, 1] != df[i + 1L, 1]) {
             table_captured <-
               as.matrix(rbind(table_captured, capture.output(writeLines(group_dashes))))
