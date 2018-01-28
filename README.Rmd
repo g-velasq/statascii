@@ -30,7 +30,7 @@ devtools::install_github("gvelasq2/statascii")
 
 ## Usage
 
-```{r example}
+```{r example, message = FALSE}
 # setup
 library(dplyr)
 library(stringr)
