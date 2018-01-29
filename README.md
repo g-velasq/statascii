@@ -5,7 +5,7 @@ statascii
 
 Create Stata-like tables in the R console
 
-[![CRAN status](http://www.r-pkg.org/badges/version/statascii)](https://cran.r-project.org/package=statascii) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.org/gvelasq2/statascii.svg?branch=master)](https://travis-ci.org/gvelasq2/statascii) [![Coverage status](https://codecov.io/gh/gvelasq2/statascii/branch/master/graph/badge.svg)](https://codecov.io/github/gvelasq2/statascii?branch=master) [![CRAN status](http://www.r-pkg.org/badges/version/statascii)](https://cran.r-project.org/package=statascii) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Installation
 ------------

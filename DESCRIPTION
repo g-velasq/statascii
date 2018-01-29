@@ -17,3 +17,5 @@ Imports:
     dplyr,
     stringr,
     rlang
+Suggests: 
+    covr
