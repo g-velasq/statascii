@@ -1,21 +1,24 @@
 Package: statascii
-Version: 0.0.0.9000
 Title: Create Stata-like Tables in the R Console
-Description: Create Stata-like tables in the R console, including right-aligned text, Stata-like padding, various Stata table formats (`oneway`, `twoway`, and `summary`), and Unicode box drawing characters. 'statascii()' borrows heavily from 'asciify()'. The 'asciify()' function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson). The 'statascii()' function was first written by @gvelasq2 in Github Gist (https://gist.github.com/gvelasq2).
+Version: 0.0.0.9000
 Authors@R: person("Gustavo", "Velásquez", , "gvelasq2github@gmail.com", c("aut", "cre"))
 Author: Gustavo Velásquez [aut, cre]
 Maintainer: Gustavo Velásquez <gvelasq2github@gmail.com>
+Description: Create Stata-like tables in the R console, including right-aligned text, Stata-like padding, various Stata table formats (`oneway`, `twoway`, and `summary`), and Unicode box drawing characters. 'statascii()' borrows heavily from 'asciify()'. The 'asciify()' function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson). The 'statascii()' function was first written by @gvelasq2 in Github Gist (https://gist.github.com/gvelasq2).
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
 URL: https://github.com/gvelasq2/statascii
 BugReports: https://github.com/gvelasq2/statascii/issues
-RoxygenNote: 6.0.1
-Roxygen: list(markdown = TRUE)
+Depends: 
+    R (>= 3.1)
 Imports: 
     dplyr,
-    stringr,
-    rlang
+    rlang,
+    stringr
 Suggests: 
-    covr
+    covr,
+    testthat
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1

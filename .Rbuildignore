@@ -8,3 +8,5 @@
 ^docs$
 ^codecov\.yml$
 ^\.travis\.yml$
+^CONTRIBUTING\.md$
+^ISSUE_TEMPLATE\.md$
