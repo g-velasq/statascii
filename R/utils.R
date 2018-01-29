@@ -55,8 +55,10 @@ wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
     for (i in 2L:length(col_index)) {
       current_list <- col_index[i]
       tbl_wrapped[[current_list]] <- as.matrix(
-        paste0(as.matrix(unlist(tbl_wrapped[current_list])),
-               as.matrix(unlist(all_cols[i])))
+        paste0(
+          as.matrix(unlist(tbl_wrapped[current_list])),
+          as.matrix(unlist(all_cols[i]))
+        )
       )
     }
     for (i in 1L:length(tbl_wrapped)) {

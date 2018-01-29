@@ -1,9 +1,9 @@
 #' Create Stata-like tables in the R console
-#' 
+#'
 #' @name statascii
-#' 
+#'
 #' @importFrom rlang %|%
-#' 
+#'
 #' @usage statascii(df, ..., flavor = "oneway", padding = "stata", separators = FALSE)
 #' @param df A data.frame or tibble.
 #' @param ... A comma separated list of unquoted variable names. Use `desc()` to sort a variable in descending order.
@@ -12,32 +12,32 @@
 #' @param separators Tabbed row separators when tabulating more than one variable.
 #'
 #' @return A Stata-like formatted table is displayed in the console. An unformatted tibble is invisibly returned.
-#' 
+#'
 #' @examples
 #' # setup
 #' library(dplyr)
 #' library(stringr)
-#' 
+#'
 #' # a. demonstrate 'oneway' flavor for one-way tables of frequencies
 #' a <- mtcars %>% count(gear) %>% rename(Freq. = n)
 #' a <- a %>% add_row(gear = "Total", Freq. = sum(a[, 2]))
 #' statascii(a, flavor = "oneway")
-#' 
+#'
 #' # b. demonstrate 'oneway' flavor with no padding
 #' b <- mtcars %>% count(gear) %>% rename(Freq. = n)
 #' b <- b %>% add_row(gear = "Total", Freq. = sum(b[, 2]))
 #' statascii(b, flavor = "oneway", padding = "none")
-#' 
+#'
 #' # c. demonstrate 'twoway' flavor for n-way tables of frequencies
 #' c <- mtcars %>% count(gear, carb, am) %>% rename(Freq. = n)
 #' c <- c %>% ungroup() %>% add_row(gear = "Total", carb = "", am = "", Freq. = sum(c[, 4]))
 #' statascii(c, flavor = "twoway")
-#' 
+#'
 #' # d. demonstrate 'twoway' flavor with dashed group separator
 #' d <- mtcars %>% count(gear, carb, am) %>% rename(Freq. = n)
 #' d <- d %>% ungroup() %>% add_row(gear = "Total", carb = "", am = "", Freq. = sum(d[, 4]))
 #' statascii(d, flavor = "twoway", separators = TRUE)
-#' 
+#'
 #' # e. demonstrate 'summary' flavor for summary statistics
 #' e <- mtcars %>% group_by(gear) %>% summarize(
 #'   Obs = n(),
@@ -47,7 +47,7 @@
 #'   Max = max(gear)
 #' )
 #' statascii(e, flavor = "summary")
-#' 
+#'
 #' # f. demonstrate wrapping feature for wide tables
 #' f <- mtcars %>%
 #'   mutate(cyl2 = cyl, vs2 = vs, am2 = am, carb2 = carb) %>%
@@ -63,8 +63,10 @@
 statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, separators = FALSE) {
   stopifnot(is.data.frame(df))
   if (ncol(df) <= 2L & flavor == "twoway") {
-    stop("data frame must have at least three columns for 'twoway' flavor",
-         call. = FALSE)
+    stop(
+      "data frame must have at least three columns for 'twoway' flavor",
+      call. = FALSE
+    )
   }
   if (ncol(df) <= 1L) {
     stop("data frame must have at least two columns", call. = FALSE)
@@ -82,17 +84,25 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
   else if (padding == "none") {
   }
   add_line <- function(n, pad = 1L) {
-    tmp <- lapply(n, function(x, pad)
-      paste0(rep("\u2500", x + (2L * pad)),
-             collapse = ""),
-      pad = pad)
+    tmp <- lapply(
+      n, function(x, pad)
+        paste0(
+          rep("\u2500", x + (2L * pad)),
+          collapse = ""
+        ),
+      pad = pad
+    )
     paste0("\u2500", paste0(tmp, collapse = "\u253c"))
   }
   add_dash <- function(n, pad = 1L) {
-    tmp <- lapply(n, function(x, pad)
-      paste0(rep("-", x + (2L * pad)),
-             collapse = ""),
-      pad = pad)
+    tmp <- lapply(
+      n, function(x, pad)
+        paste0(
+          rep("-", x + (2L * pad)),
+          collapse = ""
+        ),
+      pad = pad
+    )
     paste0("-", paste0(tmp, collapse = "\u253c"))
   }
   add_row_oneway <- function(x, n, pad = 1L) {
@@ -101,10 +111,11 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
       sprintf(fmt, as.character(x[i]))
     }
     row_content <- sapply(seq_along(x), reformat, x = x, n = n)
-    paste0(" ",
-           paste0(paste0(rep(" ", pad), row_content[1], rep(" ", pad)), collapse = ""),
-           "\u2502",
-           paste0(paste0(rep(" ", pad), row_content[-1], rep(" ", pad)), collapse = " ")
+    paste0(
+      " ",
+      paste0(paste0(rep(" ", pad), row_content[1], rep(" ", pad)), collapse = ""),
+      "\u2502",
+      paste0(paste0(rep(" ", pad), row_content[-1], rep(" ", pad)), collapse = " ")
     )
   }
   add_row_twoway <- function(x, n, pad = 1L) {
@@ -126,12 +137,18 @@ statascii <- function(df, ..., flavor = "oneway", padding = "stata", pad = 1L, s
   })
   nchar_names <- nchar(colnames(df), keepNA = FALSE)
   M <- pmax(nchar_content, nchar_names)
-  M1 <- as.integer(c(M[1],
-                     sum(M[2:(length(M))]) + (3L * ncol(df)) - 6L))
-  M2 <- as.integer(c(M[1] - 1L,
-                     sum(M[2:(length(M) - 1L)],
-                     (2L * ncol(df)) - 6L),
-                     M[length(M)] - 1L))
+  M1 <- as.integer(c(
+    M[1],
+    sum(M[2:(length(M))]) + (3L * ncol(df)) - 6L
+  ))
+  M2 <- as.integer(c(
+    M[1] - 1L,
+    sum(
+      M[2:(length(M) - 1L)],
+      (2L * ncol(df)) - 6L
+    ),
+    M[length(M)] - 1L
+  ))
   if (flavor == "oneway") {
     table_line <- add_line(M1, pad = pad)
     group_dashes <- add_dash(M1, pad = pad)
