@@ -13,7 +13,8 @@ Depends:
 Imports: 
     dplyr,
     rlang,
-    stringr
+    stringr,
+    magrittr
 Suggests: 
     covr,
     testthat
