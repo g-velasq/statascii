@@ -1,3 +1,6 @@
+#' @keywords internal
+#' @export
+
 wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
   stopifnot(is.matrix(tbl))
   if (max(nchar(tbl)) <= width) {
@@ -18,8 +21,8 @@ wrap_tbl <- function(tbl, M = M, M1 = M1, width = getOption("width")) {
         M_start[i] <- M_end[i - 1L] + 1L
       }
     }
-    col_one <- as.matrix(str_sub(tbl, start = 1L, end = M1[1] + 4L))
-    col_rest <- as.matrix(str_sub(tbl, start = M1[1] + 5L, end = -1L))
+    col_one <- as.matrix(stringr::str_sub(tbl, start = 1L, end = M1[1] + 4L))
+    col_rest <- as.matrix(stringr::str_sub(tbl, start = M1[1] + 5L, end = -1L))
     col_position <- matrix(c(M_start, M_end), ncol = 2L)
     all_cols <- list()
     if (length(M_rest) > 1L) {
