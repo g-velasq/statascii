@@ -12,9 +12,9 @@ Depends:
     R (>= 3.1)
 Imports: 
     dplyr,
+    magrittr,
     rlang,
-    stringr,
-    magrittr
+    stringr
 Suggests: 
     covr,
     testthat
