@@ -5,7 +5,7 @@ statascii
 
 Create Stata-like tables in the R console
 
-[![Travis build status](https://travis-ci.org/gvelasq-r/statascii.svg?branch=master)](https://travis-ci.org/gvelasq-r/statascii) [![Coverage status](https://codecov.io/gh/gvelasq-r/statascii/branch/master/graph/badge.svg)](https://codecov.io/github/gvelasq-r/statascii?branch=master) [![CRAN status](http://www.r-pkg.org/badges/version/statascii)](https://cran.r-project.org/package=statascii) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.org/g-velasq/statascii.svg?branch=master)](https://travis-ci.org/g-velasq/statascii) [![Coverage status](https://codecov.io/gh/g-velasq/statascii/branch/master/graph/badge.svg)](https://codecov.io/github/g-velasq/statascii?branch=master) [![CRAN status](http://www.r-pkg.org/badges/version/statascii)](https://cran.r-project.org/package=statascii) [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Installation
 ------------
@@ -14,7 +14,7 @@ You can install statascii from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("gvelasq-r/statascii")
+devtools::install_github("g-velasq/statascii")
 ```
 
 Usage
@@ -161,7 +161,7 @@ Reference
 
 `asciify()` was written by @gavinsimpson in [StackOverflow](https://stackoverflow.com/questions/13011383) and [GitHub Gist](https://gist.github.com/gavinsimpson/2b49f3026b50eeba29314398e27a6770).
 
-`statascii()` was written by @gvelasq-r in [Github Gist](https://gist.github.com/gvelasq-r/a39348f59f4353a9478704a28f86ed69) and now has its own [GitHub](https://github.com/gvelasq-r/statascii) package.
+`statascii()` was written by @g-velasq in [Github Gist](https://gist.github.com/g-velasq/a39348f59f4353a9478704a28f86ed69) and now has its own [GitHub](https://github.com/g-velasq/statascii) package.
 
 ------------------------------------------------------------------------
 

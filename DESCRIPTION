@@ -1,13 +1,13 @@
 Package: statascii
 Title: Create Stata-like Tables in the R Console
 Version: 0.0.0.9000
-Authors@R: person("Gustavo", "Velásquez", , "gvelasq2github@gmail.com", c("aut", "cre"))
+Authors@R: person("Gustavo", "Velásquez", email = "gvelasq2github@gmail.com", role = c("aut", "cre"))
 Author: Gustavo Velásquez [aut, cre]
 Maintainer: Gustavo Velásquez <gvelasq2github@gmail.com>
-Description: Create Stata-like tables in the R console, including right-aligned text, Stata-like padding, various Stata table formats (`oneway`, `twoway`, and `summary`), and Unicode box drawing characters. 'statascii()' borrows heavily from 'asciify()'. The 'asciify()' function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson). The 'statascii()' function was first written by @gvelasq2 in Github Gist (https://gist.github.com/gvelasq2).
+Description: Create Stata-like tables in the R console, including right-aligned text, Stata-like padding, various Stata table formats (`oneway`, `twoway`, and `summary`), and Unicode box drawing characters. 'statascii()' borrows heavily from 'asciify()'. The 'asciify()' function was written by @gavinsimpson in StackOverflow (https://stackoverflow.com/questions/13011383) and GitHub Gist (https://gist.github.com/gavinsimpson). The 'statascii()' function was first written by @g-velasq in Github Gist (https://gist.github.com/g-velasq).
 License: MIT + file LICENSE
-URL: https://github.com/gvelasq2/statascii
-BugReports: https://github.com/gvelasq2/statascii/issues
+URL: https://github.com/g-velasq/statascii
+BugReports: https://github.com/g-velasq/statascii/issues
 Depends: 
     R (>= 3.1)
 Imports: 
